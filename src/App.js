@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import {  useState, useEffect } from 'react'
+import Filter from './components/Filter'
+import FilteredCountries from './components/FilteredCountries'
 
 function App() {
+  const [country, setCountry] = useState ('');
+  const [countries, setCountries] = useState ([]);
+  
+  const handleCountry = (e) => {
+    e.preventDefault();
+    setCountry(e.target.value.toLowerCase())
+  }
+
+  const world = () => {
+    fetch('https://restcountries.com/v3.1/all')
+      .then(res => res.json())
+      .then(json => setCountries(json))
+    }
+
+  useEffect(world, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Filter handleCountry={handleCountry} />
+      <FilteredCountries countries={countries} countrySearch={country} />
     </div>
   );
 }
