@@ -6,6 +6,8 @@ import CountryButton from './CountryButton'
 const FilteredCountries = ( { countries, countrySearch } ) => {
   const [filterdCountries, setFilteredCountries] = useState([])
   
+  // const api_Key = process.env.REACT_API_KEY;
+
   useEffect(() => {
     const results = countries.filter(country => (
       country.name.common.toLowerCase().includes(countrySearch)
